@@ -1,0 +1,17 @@
+:root {
+  color-scheme: light dark;
+  --surface: #fff;
+  --text: #172033;
+  --accent: #2457d6;
+  --radius: .875rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --surface: #111827; --text: #f4f6fb; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--text); font: 1rem/1.6 system-ui, sans-serif; }
+.page { width: min(100% - 2rem, 58rem); margin: 4rem auto; }
+.card { margin-top: 2rem; padding: 1.5rem; border: 1px solid currentColor; border-radius: var(--radius); }
+input { display: block; max-width: 100%; padding: .65rem; }
+.button { display: inline-block; padding: .7rem 1rem; color: white; background: var(--accent); border-radius: .5rem; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }

@@ -1,0 +1,23 @@
+name: Skill request
+description: Propose a new engineering skill or substantial improvement.
+title: "[Skill]: "
+labels: ["enhancement"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Proposed skill
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Engineering problem it should solve
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow, tools, risks, and tests
+    validations:
+      required: true

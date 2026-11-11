@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A small accessible design system demo">
+  <title>Northstar UI — Design system demo</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#main">Northstar UI</a>
+    <nav aria-label="Main navigation"><a href="#components">Components</a><a href="#tokens">Tokens</a></nav>
+    <button class="button button-secondary" id="theme-toggle" type="button" aria-pressed="false">Toggle theme</button>
+  </header>
+  <main id="main" class="layout">
+    <section class="hero">
+      <p class="eyebrow">DESIGN SYSTEM STARTER</p>
+      <h1>Clear foundations.<br>Consistent interfaces.</h1>
+      <p class="muted">Reusable tokens, accessible controls, responsive layout, and theme switching.</p>
+      <a class="button" href="#components">Explore components</a>
+    </section>
+    <section id="components" class="grid" aria-label="Component examples">
+      <article class="card">
+        <p class="eyebrow">BUTTONS</p><h2>Action hierarchy</h2>
+        <div class="actions"><button class="button" type="button">Primary action</button><button class="button button-secondary" type="button">Secondary</button></div>
+      </article>
+      <article class="card">
+        <p class="eyebrow">FORM FIELD</p><h2>Accessible input</h2>
+        <label for="email">Work email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com">
+        <p class="hint" id="email-hint">Use a valid email address.</p>
+      </article>
+      <article class="card">
+        <p class="eyebrow">DIALOG</p><h2>Native dialog</h2>
+        <button class="button" id="open-dialog" type="button">Open details</button>
+        <dialog id="details-dialog" aria-labelledby="dialog-title">
+          <h2 id="dialog-title">Component details</h2><p>Native dialog; press Escape to dismiss.</p>
+          <form method="dialog"><button class="button" type="submit">Close</button></form>
+        </dialog>
+      </article>
+    </section>
+    <section id="tokens" class="card token-panel">
+      <p class="eyebrow">FOUNDATIONS</p><h2>Semantic design tokens</h2>
+      <p class="muted">Components use semantic variables so themes change without rewriting component styles.</p>
+      <div class="swatches"><span>Surface</span><span>Primary</span><span>Muted text</span></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

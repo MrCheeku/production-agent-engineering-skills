@@ -1,0 +1,24 @@
+name: Bug report
+description: Report a problem in a skill, example, or repository tool.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Include observed and expected behavior.
+    validations:
+      required: true
+  - type: input
+    id: path
+    attributes:
+      label: Affected file or example
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
