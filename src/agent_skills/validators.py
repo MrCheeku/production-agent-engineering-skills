@@ -11,7 +11,7 @@ REQUIRED_HEADINGS = (
     "## Practical example", "## Common mistakes and remedies", "## Expected outputs",
     "## Production-readiness checklist", "## Quality-assurance checklist",
 )
-LINK_PATTERN = re.compile(r"!?\\[[^\\]]*\\]\\(([^)]+)\\)")
+LINK_PATTERN = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 META_PATTERN = re.compile(r"^---\s*\n(.*?)\n---\s*(?:\n|$)", re.DOTALL)
 
 
