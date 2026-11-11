@@ -1,9 +1,11 @@
 from pathlib import Path
+
 from agent_skills.validators import check_local_markdown_links, validate_skill_text
 
 
 def test_validator_rejects_missing_frontmatter() -> None:
-    assert "missing YAML frontmatter" in validate_skill_text("# Not a skill", Path("SKILL.md"))[0]
+    errors = validate_skill_text("# Not a skill", Path("SKILL.md"))
+    assert "missing YAML frontmatter" in errors[0]
 
 
 def test_validator_accepts_complete_skill() -> None:
@@ -14,8 +16,8 @@ def test_validator_accepts_complete_skill() -> None:
         "Common mistakes and remedies", "Expected outputs", "Production-readiness checklist",
         "Quality-assurance checklist",
     )
-    text = "---\\nname: demo\\ndescription: \\"Demo skill\\"\\nversion: 1.0.0\\n---\\n"
-    text += "".join(f"## {heading}\\nContent.\\n" for heading in headings)
+    text = "---\nname: demo\ndescription: \"Demo skill\"\nversion: 1.0.0\n---\n"
+    text += "".join(f"## {heading}\nContent.\n" for heading in headings)
     assert validate_skill_text(text) == []
 
 

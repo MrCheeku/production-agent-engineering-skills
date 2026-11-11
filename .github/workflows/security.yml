@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install audit tool
-        run: python -m pip install --upgrade pip-audit
-      - name: Audit project dependencies
-        run: pip-audit .
+      - name: Install project and audit tool
+        run: python -m pip install -e ".[dev]"
+      - name: Audit installed dependencies
+        run: pip-audit

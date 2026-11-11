@@ -12,7 +12,7 @@ REQUIRED_HEADINGS = (
     "## Production-readiness checklist", "## Quality-assurance checklist",
 )
 LINK_PATTERN = re.compile(r"!?\\[[^\\]]*\\]\\(([^)]+)\\)")
-META_PATTERN = re.compile(r"^---\\s*\\n(.*?)\\n---\\s*(?:\\n|$)", re.DOTALL)
+META_PATTERN = re.compile(r"^---\s*\n(.*?)\n---\s*(?:\n|$)", re.DOTALL)
 
 
 def validate_skill_text(text: str, source: Path | str = Path("SKILL.md")) -> list[str]:
@@ -23,7 +23,7 @@ def validate_skill_text(text: str, source: Path | str = Path("SKILL.md")) -> lis
         return [f"{label}: missing YAML frontmatter"]
     metadata = match.group(1)
     for key in ("name", "description", "version"):
-        if not re.search(rf"^{key}:\\s*.+$", metadata, re.MULTILINE):
+        if not re.search(rf"^{key}:\s*.+$", metadata, re.MULTILINE):
             errors.append(f"{label}: missing frontmatter field '{key}'")
     for heading in REQUIRED_HEADINGS:
         if heading not in text:
@@ -44,7 +44,7 @@ def validate_repository(root: Path) -> list[str]:
         errors.extend(validate_skill_text(text, path.relative_to(root)))
         match = META_PATTERN.match(text)
         if match:
-            name = re.search(r"^name:\\s*(.+)$", match.group(1), re.MULTILINE)
+            name = re.search(r"^name:\s*(.+)$", match.group(1), re.MULTILINE)
             if name and name.group(1).strip().strip('"') != path.parent.name:
                 errors.append(f"{path.relative_to(root)}: frontmatter name does not match directory")
     return errors
@@ -77,13 +77,13 @@ def generate_skill_index(root: Path) -> Path:
         if not match:
             continue
         metadata = match.group(1)
-        name = re.search(r"^name:\\s*(.+)$", metadata, re.MULTILINE)
-        description = re.search(r'^description:\\s*"?(.+?)"?$', metadata, re.MULTILINE)
+        name = re.search(r"^name:\s*(.+)$", metadata, re.MULTILINE)
+        description = re.search(r'^description:\s*"?(.*?)"?$', metadata, re.MULTILINE)
         if name and description:
             rows.append((name.group(1).strip().strip('"'), description.group(1).strip()))
     output = root / "skills" / "INDEX.md"
-    body = "# Skill index\\n\\nThese skills use portable Markdown and YAML frontmatter.\\n\\n"
-    body += "| Skill | Description |\\n|---|---|\\n"
-    body += "".join(f"| [{slug}](./{slug}/SKILL.md) | {description} |\\n" for slug, description in rows)
+    body = "# Skill index\n\nThese skills use portable Markdown and YAML frontmatter.\n\n"
+    body += "| Skill | Description |\n|---|---|\n"
+    body += "".join(f"| [{slug}](./{slug}/SKILL.md) | {description} |\n" for slug, description in rows)
     output.write_text(body, encoding="utf-8")
     return output
