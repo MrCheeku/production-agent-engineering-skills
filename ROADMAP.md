@@ -6,7 +6,7 @@ This roadmap describes intended work, not completed functionality.
 
 - [x] Establish 18 core engineering skills.
 - [x] Add reference examples and validation scripts.
-- [x] Add CI, security guidance, and contribution docs.
+- [x] Add CI, security guidance, and project documentation.
 - [ ] Execute all checks on the default branch and resolve findings.
 
 ## v0.2 — Agent ergonomics

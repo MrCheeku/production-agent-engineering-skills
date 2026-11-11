@@ -24,7 +24,7 @@
 
 It provides reusable, structured **SKILL.md** guides, practical project templates, reference implementations, validation tools, and GitHub Actions workflows. The goal is to help coding agents move beyond generating isolated snippets and follow disciplined engineering workflows: understand the codebase, choose an architecture, implement carefully, test behavior, respect security boundaries, and document what they actually changed.
 
-The project takes architectural inspiration from public work such as [Claude Quickstarts](https://github.com/anthropics/claude-quickstarts), [Home Assistant MCP](https://github.com/homeassistant-ai/ha-mcp), [Sherlock](https://github.com/sherlock-project/sherlock), and [Meta Astryx](https://github.com/meta/astryx). Their source code, branding, and documentation are not copied into this repository.
+This is an independently developed project created and maintained under the **Mr.Cheeku** personal developer brand. Its engineering skills, implementation examples, project templates, documentation, and visual identity are developed as part of this project.
 
 ### ✨ Highlights
 
@@ -62,7 +62,7 @@ The repository is designed around a repeatable development loop. An agent reads 
 <img src="https://skillicons.dev/icons?i=python,html,css,js,md,git,github&theme=dark" alt="Python, HTML, CSS, JavaScript, Markdown, Git and GitHub" />
 
 ### AI & Integrations
-<img src="https://img.shields.io/badge/Anthropic-API%20Example-111827?style=flat-square" alt="Anthropic API example" />
+<img src="https://img.shields.io/badge/Model%20API-Integration-111827?style=flat-square" alt="Model API integration example" />
 <img src="https://img.shields.io/badge/Model%20Context%20Protocol-MCP-6B5CE7?style=flat-square" alt="Model Context Protocol" />
 <img src="https://img.shields.io/badge/Home%20Assistant-REST%20Integration-18BCF2?style=flat-square&logo=homeassistant&logoColor=white" alt="Home Assistant REST integration" />
 <img src="https://img.shields.io/badge/HTTPX-HTTP%20Client-5E5E5E?style=flat-square" alt="HTTPX" />
@@ -112,7 +112,7 @@ flowchart TB
     G --> I
     H --> I
     I --> J[⚙️ GitHub Actions CI]
-    J --> K[📦 Reviewed Contribution]
+    J --> K[📦 Reviewed Release]
 
     classDef root fill:#263c78,stroke:#93c5fd,color:#ffffff,stroke-width:3px;
     classDef skills fill:#075985,stroke:#7dd3fc,color:#ffffff,stroke-width:2px;
@@ -196,9 +196,7 @@ This is **real Mermaid source — not a picture**. The top-to-bottom layout keep
 │   └── markdown.yml
 │
 ├── 📖 docs/
-├── 🤝 CONTRIBUTING.md
 ├── 🛡️ SECURITY.md
-├── 📜 CODE_OF_CONDUCT.md
 ├── 📋 ROADMAP.md
 ├── 📄 CHANGELOG.md
 ├── 🤖 AGENTS.md
@@ -275,7 +273,7 @@ Browse the complete [Skill Index](skills/INDEX.md).
 
 | Example | What it demonstrates | Guide |
 |---|---|---|
-| **Claude API** | Environment-configured model request using the Anthropic Python SDK | [Open example](examples/claude-api-example/) |
+| **Model API integration** | Environment-configured model request using the Anthropic Python SDK | [Open example](examples/claude-api-example/) |
 | **MCP Tools** | Bounded arithmetic and text-statistics tools | [Open example](examples/mcp-tool-example/) |
 | **Home Assistant** | Entity-filtered reads and allowlisted light actions with confirmation | [Open example](examples/home-assistant-integration/) |
 | **Username CLI** | One supplied GitHub username checked through the public API | [Open example](examples/username-search-cli/) |
