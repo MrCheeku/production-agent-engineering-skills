@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from agent_skills.validators import validate_skill_text
 
 ROOT = Path(__file__).resolve().parents[1]

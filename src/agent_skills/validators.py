@@ -46,7 +46,9 @@ def validate_repository(root: Path) -> list[str]:
         if match:
             name = re.search(r"^name:\s*(.+)$", match.group(1), re.MULTILINE)
             if name and name.group(1).strip().strip('"') != path.parent.name:
-                errors.append(f"{path.relative_to(root)}: frontmatter name does not match directory")
+                errors.append(
+                    f"{path.relative_to(root)}: frontmatter name does not match directory"
+                )
     return errors
 
 
@@ -84,6 +86,9 @@ def generate_skill_index(root: Path) -> Path:
     output = root / "skills" / "INDEX.md"
     body = "# Skill index\n\nThese skills use portable Markdown and YAML frontmatter.\n\n"
     body += "| Skill | Description |\n|---|---|\n"
-    body += "".join(f"| [{slug}](./{slug}/SKILL.md) | {description} |\n" for slug, description in rows)
+    body += "".join(
+        f"| [{slug}](./{slug}/SKILL.md) | {description} |\n"
+        for slug, description in rows
+    )
     output.write_text(body, encoding="utf-8")
     return output
