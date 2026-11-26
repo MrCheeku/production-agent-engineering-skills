@@ -45,7 +45,9 @@ class HomeAssistantClient:
             if isinstance(item, dict) and item.get("entity_id") in self.allowed_entities
         ]
 
-    def call_service(self, entity_id: str, service: str, *, confirmed: bool = False) -> dict[str, object]:
+    def call_service(
+        self, entity_id: str, service: str, *, confirmed: bool = False
+    ) -> dict[str, object]:
         if entity_id not in self.allowed_entities:
             raise PermissionError("Entity is not allowlisted")
         domain = entity_id.split(".", maxsplit=1)[0]

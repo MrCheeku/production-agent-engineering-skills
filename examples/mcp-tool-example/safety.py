@@ -1,6 +1,6 @@
 import ast
 import operator
-from typing import Callable
+from collections.abc import Callable
 
 _OPERATORS: dict[type[ast.operator], Callable[[int | float, int | float], int | float]] = {
     ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,

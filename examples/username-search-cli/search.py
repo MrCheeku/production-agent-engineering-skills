@@ -37,7 +37,11 @@ def lookup_github_username(username: str, client: httpx.Client | None = None) ->
         if response.status_code == 404:
             return LookupResult(value, "not_found")
         if response.status_code in {403, 429}:
-            return LookupResult(value, "blocked_or_rate_limited", message="Public API denied or rate-limited this request")
+            return LookupResult(
+                value,
+                "blocked_or_rate_limited",
+                message="Public API denied or rate-limited this request",
+            )
         response.raise_for_status()
         data = response.json()
         return LookupResult(
@@ -53,7 +57,9 @@ def lookup_github_username(username: str, client: httpx.Client | None = None) ->
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Check one supplied username using GitHub's public API.")
+    parser = argparse.ArgumentParser(
+        description="Check one supplied username using GitHub's public API."
+    )
     parser.add_argument("username", nargs="?")
     parser.add_argument("--json", action="store_true", help="Print JSON")
     parser.add_argument("--version", action="version", version=VERSION)
