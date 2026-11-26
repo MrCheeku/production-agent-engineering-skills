@@ -33,7 +33,7 @@ def lookup_github_username(username: str, client: httpx.Client | None = None) ->
         follow_redirects=False,
     )
     try:
-        response = active.get(f"/users/{value}")
+        response = active.get(f"{API_ROOT}/users/{value}")
         if response.status_code == 404:
             return LookupResult(value, "not_found")
         if response.status_code in {403, 429}:
