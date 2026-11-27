@@ -40,33 +40,38 @@ def validate_repository(root: Path) -> list[str]:
         return ["No skills/*/SKILL.md files found"]
     errors: list[str] = []
     for path in paths:
-        text = path.read_text(encoding="utf-8")
-        errors.extend(validate_skill_text(text, path.relative_to(root)))
-        match = META_PATTERN.match(text)
+        content = path.read_text(encoding="utf-8")
+        errors.extend(validate_skill_text(content, path.relative_to(root)))
+        match = META_PATTERN.match(content)
         if match:
             name = re.search(r"^name:\s*(.+)$", match.group(1), re.MULTILINE)
             if name and name.group(1).strip().strip('"') != path.parent.name:
-                errors.append(f"{path.relative_to(root)}: frontmatter name does not match directory")
+                errors.append(
+                    f"{path.relative_to(root)}: frontmatter name does not match directory"
+                )
     return errors
 
 
 def check_local_markdown_links(root: Path) -> list[str]:
     errors: list[str] = []
+    ignored_directories = {".git", ".venv", "node_modules"}
     for markdown in root.rglob("*.md"):
-        if any(part in {".git", ".venv", "node_modules"} for part in markdown.parts):
+        if any(part in ignored_directories for part in markdown.parts):
             continue
-        text = markdown.read_text(encoding="utf-8")
-        for raw in LINK_PATTERN.findall(text):
+        content = markdown.read_text(encoding="utf-8")
+        for raw in LINK_PATTERN.findall(content):
             target = raw.strip().split()[0].strip("<>")
             parsed = urlparse(target)
-            if parsed.scheme or target.startswith("#") or target.startswith("mailto:"):
+            if parsed.scheme or target.startswith("#"):
                 continue
             path_part = unquote(parsed.path)
             if not path_part:
                 continue
             candidate = (markdown.parent / path_part).resolve()
             if not candidate.exists():
-                errors.append(f"{markdown.relative_to(root)}: broken local link '{target}'")
+                errors.append(
+                    f"{markdown.relative_to(root)}: broken local link '{target}'"
+                )
     return errors
 
 
@@ -78,12 +83,17 @@ def generate_skill_index(root: Path) -> Path:
             continue
         metadata = match.group(1)
         name = re.search(r"^name:\s*(.+)$", metadata, re.MULTILINE)
-        description = re.search(r'^description:\s*"?(.*?)"?$', metadata, re.MULTILINE)
+        description = re.search(
+            r'^description:\s*"?(.*?)"?$', metadata, re.MULTILINE
+        )
         if name and description:
             rows.append((name.group(1).strip().strip('"'), description.group(1).strip()))
     output = root / "skills" / "INDEX.md"
     body = "# Skill index\n\nThese skills use portable Markdown and YAML frontmatter.\n\n"
     body += "| Skill | Description |\n|---|---|\n"
-    body += "".join(f"| [{slug}](./{slug}/SKILL.md) | {description} |\n" for slug, description in rows)
+    body += "".join(
+        f"| [{slug}](./{slug}/SKILL.md) | {description} |\n"
+        for slug, description in rows
+    )
     output.write_text(body, encoding="utf-8")
     return output
