@@ -3,6 +3,13 @@ import pytest
 from search import lookup_github_username
 
 
+def api_client(handler) -> httpx.Client:
+    return httpx.Client(
+        base_url="https://api.github.com",
+        transport=httpx.MockTransport(handler),
+    )
+
+
 def test_returns_public_profile_fields() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, json={
@@ -11,14 +18,17 @@ def test_returns_public_profile_fields() -> None:
             "public_repos": 8,
             "created_at": "2011-01-25T18:44:36Z",
         })
-    with httpx.Client(base_url="https://api.github.com", transport=httpx.MockTransport(handler)) as client:
+
+    with api_client(handler) as client:
         result = lookup_github_username("octocat", client)
+
     assert result.status == "found"
     assert result.profile_url == "https://github.com/octocat"
 
 
 def test_not_found_is_not_an_error() -> None:
-    with httpx.Client(base_url="https://api.github.com", transport=httpx.MockTransport(lambda request: httpx.Response(404))) as client:
+    handler = lambda request: httpx.Response(404)
+    with api_client(handler) as client:
         assert lookup_github_username("unknown-user", client).status == "not_found"
 
 
@@ -28,5 +38,6 @@ def test_invalid_username_is_rejected() -> None:
 
 
 def test_rate_limit_is_reported() -> None:
-    with httpx.Client(base_url="https://api.github.com", transport=httpx.MockTransport(lambda request: httpx.Response(429))) as client:
+    handler = lambda request: httpx.Response(429)
+    with api_client(handler) as client:
         assert lookup_github_username("octocat", client).status == "blocked_or_rate_limited"
