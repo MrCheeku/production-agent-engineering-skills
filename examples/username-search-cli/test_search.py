@@ -27,7 +27,8 @@ def test_returns_public_profile_fields() -> None:
 
 
 def test_not_found_is_not_an_error() -> None:
-    handler = lambda request: httpx.Response(404)
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(404)
     with api_client(handler) as client:
         assert lookup_github_username("unknown-user", client).status == "not_found"
 
@@ -38,6 +39,7 @@ def test_invalid_username_is_rejected() -> None:
 
 
 def test_rate_limit_is_reported() -> None:
-    handler = lambda request: httpx.Response(429)
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(429)
     with api_client(handler) as client:
         assert lookup_github_username("octocat", client).status == "blocked_or_rate_limited"
