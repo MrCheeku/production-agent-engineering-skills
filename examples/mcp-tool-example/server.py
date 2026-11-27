@@ -1,5 +1,4 @@
 from mcp.server import MCPServer
-
 from safety import safe_calculate
 
 server = MCPServer("Production Agent Utilities")
